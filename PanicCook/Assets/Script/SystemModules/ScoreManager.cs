@@ -8,14 +8,17 @@ public class ScoreManager : PersistentUnitySingleton<ScoreManager>
 {
     #region SCORE DISPLAY
     public int Score => score;
+    public int Star => star;
 
     private int score;
+    private int star;
     private int currentScore;
 
     Vector3 scoreTextScale = new Vector3(1.2f, 1.2f, 1f);
 
     public void ResetScore()
     {
+        star = 0;
         score = 0;
         currentScore = 0;
         ScoreDisplay.UpdateText(score);

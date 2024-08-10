@@ -21,6 +21,11 @@ public class ScoreDisplay : MonoBehaviour
     {
         scoreText.text = score.ToString();
     }
+    
+    public static void UpdateStarText(int star)
+    {
+        //
+    }
 
     public static void ScaleText(Vector3 targetScale) => scoreText.rectTransform.localScale = targetScale;
 }

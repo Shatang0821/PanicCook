@@ -150,8 +150,7 @@ public class Player : MonoBehaviour
         //中心位置のRectTransformの座標を取得
         var initPos = _foodTransforms[_currentIndex].anchoredPosition;
         var targetPos = new Vector2(initPos.x, _rectTransform.anchoredPosition.y);
-        
-        StartCoroutine(MoveToTargetPosCoroutine(targetPos));
+        _rectTransform.anchoredPosition = targetPos;
     }
 
     public void Reset()
@@ -170,7 +169,7 @@ public class Player : MonoBehaviour
     private IEnumerator MoveToTargetPosCoroutine(Vector2 targetPos)
     {
         // 移動を開始
-        while (Vector2.Distance(_rectTransform.anchoredPosition, targetPos) > _stopThreshold)
+        while (Vector2.Distance(_rectTransform.anchoredPosition, targetPos) > _stopThreshold && GameManager.Instance.CurrentGameState == GameState.PlayerTurn)
         {
             // 現在の位置を更新
             _rectTransform.anchoredPosition = Vector2.MoveTowards(

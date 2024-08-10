@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.HID;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoringUIController : MonoBehaviour
@@ -72,6 +73,7 @@ public class ScoringUIController : MonoBehaviour
     private void Retry()
     {
         //シーンロード
+        SceneManager.LoadScene("Sato_");
     }
 
     /// <summary>
@@ -109,6 +111,7 @@ public class ScoringUIController : MonoBehaviour
     {
         Debug.Log("メインメニューに戻る");
         scoringScreenCanvas.enabled = false;
+        SceneManager.LoadScene("Title");
         //SceneLoader.Instance.LoadMainMenuScene();
     }
 

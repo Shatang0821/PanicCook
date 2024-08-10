@@ -10,8 +10,7 @@ public enum GameState
     WaitGuest,      // 客が出てきて、オーダーを表示
     PlayerTurn,     // プレイヤの移動、料理の提供
     ScoreState,     // スコアの計算
-    
-    End
+    End             // ゲーム終了
 }
 
 public class GameManager : UnitySingleton<GameManager>
@@ -19,8 +18,21 @@ public class GameManager : UnitySingleton<GameManager>
     [SerializeField]
     private Player _player;
     
-    public GameState CurrentGameState;
-    
+    private GameState _currentGameState;
+
+    public GameState CurrentGameState
+    {
+        get => _currentGameState;
+        set
+        {
+            if (_currentGameState != value)
+            {
+                _currentGameState = value;
+                OnEnterState(_currentGameState);
+            }
+        }
+    }
+
     private IEnumerator Start()
     {
         CurrentGameState = GameState.InitState;
@@ -44,10 +56,36 @@ public class GameManager : UnitySingleton<GameManager>
                 ScoreState();
                 break;
             case GameState.End:
-                GameEnd();;
+                GameEnd();
                 break;
         }
-        //Debug.Log("currentGameState:" + CurrentGameState);
+    }
+    
+    private void OnEnterState(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.InitState:
+                // InitStateの初期化処理
+                Debug.Log("Entering InitState");
+                break;
+            case GameState.WaitGuest:
+                // WaitGuestの初期化処理
+                Debug.Log("Entering WaitGuest");
+                break;
+            case GameState.PlayerTurn:
+                // PlayerTurnの初期化処理
+                Debug.Log("Entering PlayerTurn");
+                break;
+            case GameState.ScoreState:
+                // ScoreStateの初期化処理
+                Debug.Log("Entering ScoreState");
+                break;
+            case GameState.End:
+                // Endの初期化処理
+                Debug.Log("Entering End");
+                break;
+        }
     }
 
     private void GameEnd()
@@ -60,8 +98,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     private void ScoreState()
     {
-//        Debug.Log(GuestManager.Instance.GetGuestOrderIndex() + "を求める" + _player.SubmitIndex + "を提出");
-        if(GuestManager.Instance.GetGuestOrderIndex() == _player.SubmitIndex)
+        if (GuestManager.Instance.GetGuestOrderIndex() == _player.SubmitIndex)
         {
             Debug.Log("正解");
             GuestManager.Instance.Exit();
@@ -69,10 +106,9 @@ public class GameManager : UnitySingleton<GameManager>
         }
         else
         {
-//            Debug.Log("不正解");
             GuestManager.Instance.Exit();
         }
-        
+
         CurrentGameState = GameState.InitState;
     }
 
@@ -90,7 +126,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     private void WaitGuest()
     {
-        if(GuestManager.Instance.GuestIsOrdered())
+        if (GuestManager.Instance.GuestIsOrdered())
         {
             CurrentGameState = GameState.PlayerTurn;
         }
@@ -98,11 +134,9 @@ public class GameManager : UnitySingleton<GameManager>
 
     private void InitState()
     {
-        //料理のランダム表示
         FoodManager.Instance.TableShuffle();
-        //プレイヤのリセット
-        _player.Reset();
         GuestManager.Instance.SpawnGuest();
+        _player.Reset();
         CurrentGameState = GameState.WaitGuest;
     }
 }
