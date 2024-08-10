@@ -13,6 +13,9 @@ public class Food
     // 料理のタイプを表す変数
     [SerializeField]
     private FoodType _foodType;
+    
+    [SerializeField]
+    private Image _image;
     public Food(FoodType foodType,Sprite sprite)
     {
         _foodType = foodType;
@@ -22,5 +25,10 @@ public class Food
     public Sprite GetSprite()
     {
         return _sprite;
+    }
+    
+    public FoodType GetFoodType()
+    {
+        return _foodType;
     }
 }

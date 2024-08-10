@@ -100,11 +100,11 @@ public class Player : MonoBehaviour
     
     private void OnSubmit()
     {
-        Debug.Log("abaaba" + _canSubmit);
-        if(_canSubmit)
+        if(_canSubmit && GameManager.Instance.CurrentGameState == GameState.PlayerTurn)
         {
             IsSubmit = true;
             SubmitIndex = _currentIndex;
+            Debug.Log("SubmitIndex:" + SubmitIndex);
         }
     }
 

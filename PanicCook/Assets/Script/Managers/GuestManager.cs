@@ -18,6 +18,7 @@ public class GuestManager : UnitySingleton<GuestManager>
     
     private List<Guest> _guests = new List<Guest>();
     private Guest _currentGuest;
+    [SerializeField]
     private float _waitTime = 5.0f;  //デフォルトで5秒待つ
     
     [SerializeField]
@@ -51,7 +52,7 @@ public class GuestManager : UnitySingleton<GuestManager>
     public IEnumerator SpawnGuestCoroutine()
     {
         _currentGuest = _guests[_guestIndex];
-        _currentGuest.Spawn(_guestSprites[Random.Range(0, _guestSprites.Length)], new Vector3(1100, 0, 0), 1.0f);
+        _currentGuest.Spawn(_guestSprites[Random.Range(0, _guestSprites.Length)], new Vector3(1100, 0, 0), 0.2f);
         _guestIndex = (_guestIndex + 1) % _guests.Count;
         
         yield return new WaitUntil(GuestIsOrdered);
@@ -74,7 +75,7 @@ public class GuestManager : UnitySingleton<GuestManager>
     /// <returns></returns>
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(_waitTime);
         Exit();
         //時間オーバー
         IsTimeOver = true;
@@ -84,6 +85,6 @@ public class GuestManager : UnitySingleton<GuestManager>
     {
         if(_waitCoroutine != null)
             StopCoroutine(_waitCoroutine);
-        _currentGuest.Exit();
+        _currentGuest.Exit(0.2f);
     }
 }

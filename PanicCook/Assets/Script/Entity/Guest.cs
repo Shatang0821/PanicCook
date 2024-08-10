@@ -14,10 +14,6 @@ public class Guest
     RectTransform _guestTransform;   //客のRectTransform
 
     public bool IsOrdered = false;
-    public Guest()
-    {
-        
-    }
     
     /// <summary>
     /// 初期化処理
@@ -68,7 +64,7 @@ public class Guest
        
     }
 
-    public void Exit()
+    public void Exit(float duration)
     {
         _guestTransform.DOAnchorPosX(_guestTransform.anchoredPosition.x - 1100, 0.8f).SetEase(Ease.Linear).onComplete = () =>
         {

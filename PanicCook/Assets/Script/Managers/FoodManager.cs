@@ -15,7 +15,8 @@ public enum FoodType
     Pizza,
     Sushi,
     OmeletRice,
-    Potato
+    Potato,
+    Cake
 }
 
 
@@ -77,6 +78,7 @@ public class FoodManager : UnitySingleton<FoodManager>
         {
             return null;
         }    
+        Debug.Log(index + "," +_foods[index].GetFoodType());
         return _foods[index];
     }
 
