@@ -1,18 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Food : MonoBehaviour
+public class Food
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //料理のImage
+    private Image _image;
+    // 料理のタイプを表す変数
 }
