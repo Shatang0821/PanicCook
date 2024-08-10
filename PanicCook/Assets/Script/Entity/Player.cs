@@ -29,7 +29,8 @@ public class Player : MonoBehaviour
     private RectTransform _rectTransform;   //プレイヤのRectTransform
     
     private Coroutine _moveCoroutine;       //移動コルーチン
-
+    private Coroutine _doMoveCoroutine;     //移動コルーチン
+    
     [SerializeField] private int _maxStamina;                //最大スタミナ
     private int _currentStamina;                             //スタミナ
     private void Awake()
@@ -134,12 +135,10 @@ public class Player : MonoBehaviour
 
         //移動先のRectTransformの座標を取得
         var targetPos = new Vector2(_foodTransforms[_currentIndex].anchoredPosition.x, _rectTransform.anchoredPosition.y);
-
-        StartCoroutine(MoveToTargetPosCoroutine(targetPos));
+        if(_doMoveCoroutine != null)
+            StopCoroutine(_doMoveCoroutine);
+        _doMoveCoroutine = StartCoroutine(MoveToTargetPosCoroutine(targetPos));
         
-        //プレイヤの座標を移動先に設定
-        _rectTransform.anchoredPosition = targetPos;
-        _canSubmit = true;
     }
     
     /// <summary>
@@ -151,7 +150,7 @@ public class Player : MonoBehaviour
         //中心位置のRectTransformの座標を取得
         var initPos = _foodTransforms[_currentIndex].anchoredPosition;
         var targetPos = new Vector2(initPos.x, _rectTransform.anchoredPosition.y);
-
+        
         StartCoroutine(MoveToTargetPosCoroutine(targetPos));
     }
 
@@ -161,7 +160,7 @@ public class Player : MonoBehaviour
         _canSubmit = true;
         _currentStamina = _maxStamina;
         IsSubmit = false;
-        SubmitIndex = 0;
+        SubmitIndex = -1;
     }
 
     /// <summary>
@@ -182,5 +181,9 @@ public class Player : MonoBehaviour
 
             yield return null;
         }
+        
+        //プレイヤの座標を移動先に設定
+        _rectTransform.anchoredPosition = targetPos;
+        _canSubmit = true;
     }
 }

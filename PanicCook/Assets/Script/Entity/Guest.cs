@@ -41,7 +41,7 @@ public class Guest
         _guestTransform.anchoredPosition = position;
         _guest.SetActive(true);
         
-        _guestTransform.DOAnchorPosX(position.x - 1100, duration).SetEase(Ease.OutBounce).onComplete = () =>
+        _guestTransform.DOAnchorPosX(position.x - 1100, duration).SetEase(Ease.Linear).onComplete = () =>
         {
             SetOrder();
             ShowOrder();
@@ -66,7 +66,7 @@ public class Guest
 
     public void Exit(float duration)
     {
-        _guestTransform.DOAnchorPosX(_guestTransform.anchoredPosition.x - 1100, 0.8f).SetEase(Ease.Linear).onComplete = () =>
+        _guestTransform.DOAnchorPosX(_guestTransform.anchoredPosition.x - 1100, duration).SetEase(Ease.Linear).onComplete = () =>
         {
             _guest.SetActive(false);
             _orderImage.enabled = false;

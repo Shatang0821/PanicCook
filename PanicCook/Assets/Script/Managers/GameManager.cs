@@ -47,15 +47,16 @@ public class GameManager : UnitySingleton<GameManager>
 
     private void ScoreState()
     {
-        Debug.Log(GuestManager.Instance.GetGuestOrderIndex() + "を求める" + _player.SubmitIndex + "を提出");
+//        Debug.Log(GuestManager.Instance.GetGuestOrderIndex() + "を求める" + _player.SubmitIndex + "を提出");
         if(GuestManager.Instance.GetGuestOrderIndex() == _player.SubmitIndex)
         {
             Debug.Log("正解");
             GuestManager.Instance.Exit();
+            ScoreManager.Instance.AddScore(100);
         }
         else
         {
-            Debug.Log("不正解");
+//            Debug.Log("不正解");
             GuestManager.Instance.Exit();
         }
         

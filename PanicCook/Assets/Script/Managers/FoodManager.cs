@@ -24,16 +24,17 @@ public class FoodManager : UnitySingleton<FoodManager>
 {
     public Transform TableTransform;        //テーブルのRectTransform
     //料理のお皿
-    [SerializeField] private Image[] _foodTable;
+    [SerializeField] private Image[] _foodImageTable;
     
     //料理のリスト
     [SerializeField] private List<Food> _foods = new List<Food>();
     
+    [SerializeField] private List<Food> _foodsTable = new List<Food>();
     protected override void Awake()
     {
         base.Awake();
         
-        _foodTable = new Image[5];
+        _foodImageTable = new Image[5];
 
         int index = 0;
         foreach (Transform child in TableTransform)
@@ -41,7 +42,7 @@ public class FoodManager : UnitySingleton<FoodManager>
             Image image = child.GetComponent<Image>();
             if (image != null)
             {
-                _foodTable[index] = image;
+                _foodImageTable[index] = image;
                 index++;
             }
             else
@@ -56,14 +57,14 @@ public class FoodManager : UnitySingleton<FoodManager>
         if (_foods.Count >= 5)
         {
             int index = 0;
-            List<Food> randomFoods = _foods.OrderBy(x => Random.value).Take(5).ToList();
-            foreach (var food in randomFoods)
+            _foodsTable = _foods.OrderBy(x => Random.value).Take(5).ToList();
+            foreach (var food in _foodsTable)
             {
                 // 料理の画像をセット
-                _foodTable[index].sprite = food.GetSprite();
+                _foodImageTable[index].sprite = food.GetSprite();
 
                 // 回転アニメーションを追加（360度回転）
-                _foodTable[index].transform.DORotate(new Vector3(0, 360, 0), 0.7f, RotateMode.FastBeyond360)
+                _foodImageTable[index].transform.DORotate(new Vector3(0, 360, 0), 0.7f, RotateMode.FastBeyond360)
                     .SetEase(Ease.OutQuad);
 
                 index++;
@@ -78,8 +79,8 @@ public class FoodManager : UnitySingleton<FoodManager>
         {
             return null;
         }    
-        Debug.Log(index + "," +_foods[index].GetFoodType());
-        return _foods[index];
+//        Debug.Log(index + "," +_foodsTable[index].GetFoodType());
+        return _foodsTable[index];
     }
 
 }

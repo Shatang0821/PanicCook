@@ -25,6 +25,8 @@ public class GuestManager : UnitySingleton<GuestManager>
     private int _guestIndex = 0;
     
     Coroutine _waitCoroutine;
+
+    [SerializeField] private float _moveDuration = 0.2f;
     
     public bool IsTimeOver { get; private set; }
     private void Awake()
@@ -52,7 +54,7 @@ public class GuestManager : UnitySingleton<GuestManager>
     public IEnumerator SpawnGuestCoroutine()
     {
         _currentGuest = _guests[_guestIndex];
-        _currentGuest.Spawn(_guestSprites[Random.Range(0, _guestSprites.Length)], new Vector3(1100, 0, 0), 0.2f);
+        _currentGuest.Spawn(_guestSprites[Random.Range(0, _guestSprites.Length)], new Vector3(1100, 0, 0), _moveDuration);
         _guestIndex = (_guestIndex + 1) % _guests.Count;
         
         yield return new WaitUntil(GuestIsOrdered);
@@ -85,6 +87,6 @@ public class GuestManager : UnitySingleton<GuestManager>
     {
         if(_waitCoroutine != null)
             StopCoroutine(_waitCoroutine);
-        _currentGuest.Exit(0.2f);
+        _currentGuest.Exit(_moveDuration);
     }
 }
