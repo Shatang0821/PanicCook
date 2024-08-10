@@ -522,6 +522,7 @@ GameObject:
   - component: {fileID: 1108741236}
   - component: {fileID: 1108741238}
   - component: {fileID: 1108741237}
+  - component: {fileID: 1108741239}
   m_Layer: 5
   m_Name: Time
   m_TagString: Untagged
@@ -546,7 +547,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 800, y: 450}
+  m_AnchoredPosition: {x: -750, y: 450}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1108741237
@@ -591,6 +592,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108741235}
   m_CullTransparentMesh: 1
+--- !u!114 &1108741239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108741235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 087824f450249f9408bee2b2f847cc80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Timetext: {fileID: 1108741237}
+  limit: 0
 --- !u!1 &1382409240
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,8 +824,8 @@ MonoBehaviour:
   Menu5: {fileID: 912644727}
   Steak: {fileID: 0}
   Pizza: {fileID: 0}
-  Sushi: {fileID: 0}
-  "\u30AA\u30E0\u30E9\u30A4\u30B9": {fileID: 0}
+  Sushi: {fileID: 21300000, guid: 797b2dfe19abc7643a4db8918612aa23, type: 3}
+  "\u30AA\u30E0\u30E9\u30A4\u30B9": {fileID: 21300000, guid: d28b8ab8044bd3b43bd19b1a24a56e39, type: 3}
   Potato: {fileID: 0}
 --- !u!4 &2132954711
 Transform:
