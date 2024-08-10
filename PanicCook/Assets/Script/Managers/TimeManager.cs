@@ -6,22 +6,22 @@ using UnityEngine.UI;
 public class TimeManager : MonoBehaviour
 {
     [SerializeField] Text Timetext;
-    public float limit;
-    // Start is called before the first frame update
-    void Start()
-    {
-        limit = 60;
-    }
+    public float limit = 60.0f;
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         Timetext.text = "Žc‚è" + limit.ToString("f0") + "•b";
 
-        limit -= Time.deltaTime;
-        if (limit <= 0)
+        if (GameManager.Instance.CurrentGameState != GameState.End)
         {
-            limit = 0;
+            limit -= Time.deltaTime;
+            if (limit <= 0)
+            {
+                limit = 0;
+                GameManager.Instance.CurrentGameState = GameState.End;
+            }
         }
+        
     }
 }

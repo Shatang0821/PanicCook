@@ -1,8 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using FrameWork.Utils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -10,6 +10,8 @@ public enum GameState
     WaitGuest,      // 客が出てきて、オーダーを表示
     PlayerTurn,     // プレイヤの移動、料理の提供
     ScoreState,     // スコアの計算
+    
+    End
 }
 
 public class GameManager : UnitySingleton<GameManager>
@@ -41,8 +43,19 @@ public class GameManager : UnitySingleton<GameManager>
             case GameState.ScoreState:
                 ScoreState();
                 break;
+            case GameState.End:
+                GameEnd();;
+                break;
         }
         //Debug.Log("currentGameState:" + CurrentGameState);
+    }
+
+    private void GameEnd()
+    {
+        _player.Reset();
+        Debug.Log("ゲーム終了");
+        DOTween.KillAll();  // すべてのアニメーションを停止する場合
+        SceneManager.LoadScene("Scoring");
     }
 
     private void ScoreState()
