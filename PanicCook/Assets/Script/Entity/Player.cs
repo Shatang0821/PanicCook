@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     private float _stopThreshold = 0.1f;    // 移動停止の閾値
     
     private bool _canSubmit;                //料理選択可能か
+    public bool IsSubmit;                   //料理を提供したか
+    public int SubmitIndex { get; private set; }    //提供した料理のインデックス
     
     private PlayerInput input;              //入力変数
 
@@ -96,17 +98,20 @@ public class Player : MonoBehaviour
         _moveCoroutine = StartCoroutine(MoveCoroutine(axis));
     }
     
-    void OnSubmit()
+    private void OnSubmit()
     {
+        Debug.Log("abaaba" + _canSubmit);
         if(_canSubmit)
         {
-            Debug.Log("選択");
-            //ゲーム状態の遷移
+            IsSubmit = true;
+            SubmitIndex = _currentIndex;
         }
     }
 
     private IEnumerator MoveCoroutine(Vector2 axis)
     {
+        if(GameManager.Instance.CurrentGameState != GameState.PlayerTurn)
+            yield break;
         
         _canSubmit = false;
         Vector2 startPos = _rectTransform.anchoredPosition;
@@ -126,10 +131,45 @@ public class Player : MonoBehaviour
                 _currentStamina = Mathf.Clamp(_currentStamina - 1, 0, _maxStamina);
             }
         }
-        Debug.Log(_currentIndex + "スタミナ:" + _currentStamina);
+
         //移動先のRectTransformの座標を取得
         var targetPos = new Vector2(_foodTransforms[_currentIndex].anchoredPosition.x, _rectTransform.anchoredPosition.y);
+
+        StartCoroutine(MoveToTargetPosCoroutine(targetPos));
         
+        //プレイヤの座標を移動先に設定
+        _rectTransform.anchoredPosition = targetPos;
+        _canSubmit = true;
+    }
+    
+    /// <summary>
+    /// プレイヤを中心位置に設定
+    /// </summary>
+    private void SetPosToCenter()
+    {
+        _currentIndex = _centerIndex;
+        //中心位置のRectTransformの座標を取得
+        var initPos = _foodTransforms[_currentIndex].anchoredPosition;
+        var targetPos = new Vector2(initPos.x, _rectTransform.anchoredPosition.y);
+
+        StartCoroutine(MoveToTargetPosCoroutine(targetPos));
+    }
+
+    public void Reset()
+    {
+        SetPosToCenter();
+        _canSubmit = true;
+        _currentStamina = _maxStamina;
+        IsSubmit = false;
+        SubmitIndex = 0;
+    }
+
+    /// <summary>
+    /// 指定位置まで移動する
+    /// </summary>
+    /// <param name="targetPos">指定位置</param>
+    private IEnumerator MoveToTargetPosCoroutine(Vector2 targetPos)
+    {
         // 移動を開始
         while (Vector2.Distance(_rectTransform.anchoredPosition, targetPos) > _stopThreshold)
         {
@@ -142,21 +182,5 @@ public class Player : MonoBehaviour
 
             yield return null;
         }
-        
-        //プレイヤの座標を移動先に設定
-        _rectTransform.anchoredPosition = targetPos;
-        _canSubmit = true;
-    }
-    
-    /// <summary>
-    /// プレイヤを中心位置に設定
-    /// </summary>
-    private void SetPosToCenter()
-    {
-        //中心位置のRectTransformの座標を取得
-        var initPos = _foodTransforms[_centerIndex].anchoredPosition;
-        var pos = new Vector2(initPos.x, _rectTransform.anchoredPosition.y);
-        //プレイヤの座標を中心位置に設定
-        _rectTransform.anchoredPosition = pos;
     }
 }
