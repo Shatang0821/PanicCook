@@ -18,6 +18,10 @@ public enum FoodType
     Potato,
     Cake,
     Yukkejan,
+    Salada,
+    Ice,
+    Karameru,
+    FiredIce
 }
 
 

@@ -78,7 +78,7 @@ public class GuestManager : UnitySingleton<GuestManager>
             VARIABLE.Initialize(Instantiate(_guestPrefab,Vector2.zero,Quaternion.identity,_guestParentTransform));
         }
         
-        Debug.Log( _guestExpressions.Count);
+//        Debug.Log( _guestExpressions.Count);
     }
 
     /// <summary>

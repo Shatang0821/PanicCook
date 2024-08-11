@@ -18,7 +18,12 @@ public class Clock_Timer : MonoBehaviour
     {
         //ClockのUpdateClock関数を呼び出す
         //引数は_updateTimer()のtimerの値
-        clock.UpdateClock(_updateTimer());
+        if (GameManager.Instance.CurrentGameState != GameState.Default)
+        {
+            Debug.Log("Clock_Timer");
+            clock.UpdateClock(_updateTimer());
+        }
+        
     }
 
     float _updateTimer()

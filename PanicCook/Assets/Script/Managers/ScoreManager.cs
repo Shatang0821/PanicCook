@@ -175,7 +175,7 @@ public class ScoreManager : PersistentUnitySingleton<ScoreManager>
         public List<PlayerScore> list = new List<PlayerScore>();
     }
 
-    readonly string SaveFileName = "player_score.json";
+    readonly string SaveFileName = "PaniCookRanking.json";
     string playerName = "NO Name";//デフォルトの名前
 
     //一番小さいスコアより高いときハイスコアありと判断する

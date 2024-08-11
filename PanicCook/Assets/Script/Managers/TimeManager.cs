@@ -13,8 +13,9 @@ public class TimeManager : MonoBehaviour
     {
         Timetext.text = limit.ToString("f0");
 
-        if (GameManager.Instance.CurrentGameState != GameState.End)
+        if (GameManager.Instance.CurrentGameState != GameState.Default)
         {
+            Debug.Log("TimeManager");
             limit -= Time.deltaTime;
             if (limit <= 0)
             {

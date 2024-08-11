@@ -13,6 +13,7 @@ public enum GameAction
 
 public enum GameState
 {
+    Default,        // デフォルト
     InitState,      // 料理のリセット、主人公のリセット、客のリセット
     WaitGuest,      // 客が出てきて、オーダーを表示
     PlayerTurn,     // プレイヤの移動、料理の提供
@@ -28,10 +29,13 @@ public class GameManager : UnitySingleton<GameManager>
     private AudioData CorrectSE;
     [SerializeField]
     private AudioData IncorrectSE;
-    
+
+    [SerializeField]
+    private GameObject _counter;
     //プレイヤインスタンス
     [SerializeField]
     private Player _player;
+    [SerializeField]
     //ゲームの状態
     private GameState _currentGameState;
 
@@ -52,11 +56,20 @@ public class GameManager : UnitySingleton<GameManager>
         }
     }
 
-    private IEnumerator Start()
+    protected override void Awake()
     {
+        base.Awake();
         AudioManager.Instance.ChangeBGM(_bgm);
+        _counter.SetActive(false);
+        CurrentGameState = GameState.Default;
+        
+        //Debug.Log(Application.persistentDataPath);
+    }
+
+    public void StartGame()
+    {
+        _counter.SetActive(true);
         CurrentGameState = GameState.InitState;
-        yield return new WaitForSeconds(1.5f);
     }
 
     private void Update()
