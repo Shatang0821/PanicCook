@@ -16,7 +16,8 @@ public enum FoodType
     Sushi,
     OmeletRice,
     Potato,
-    Cake
+    Cake,
+    Yukkejan,
 }
 
 
@@ -53,7 +54,7 @@ public class FoodManager : UnitySingleton<FoodManager>
             }
         }
         
-        Debug.Log(_tableCount);
+//        Debug.Log(_tableCount);
     }
 
     /// <summary>

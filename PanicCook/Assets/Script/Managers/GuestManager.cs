@@ -18,6 +18,9 @@ public class GuestManager : UnitySingleton<GuestManager>
     //客の画像配列
     [SerializeField]
     private Sprite[] _guestSprites;
+    
+    [SerializeField]
+    private List<Expression> _guestExpressions;
     //客クラスのリスト
     private List<Guest> _guests = new List<Guest>();
     //現在の客
@@ -107,7 +110,7 @@ public class GuestManager : UnitySingleton<GuestManager>
         // 対応する移動時間を取得し設定
         if (_correctStreakMoveTimeValues.TryGetValue(correctStreakMoveTime, out float moveTime))
         {
-            Debug.Log($"連続正解 {correctStreak} 回に対応する移動時間は {moveTime} 秒です。");
+//            Debug.Log($"連続正解 {correctStreak} 回に対応する移動時間は {moveTime} 秒です。");
             _moveDuration = moveTime;
         }
     }
@@ -173,4 +176,12 @@ public class GuestManager : UnitySingleton<GuestManager>
             StopCoroutine(_waitCoroutine);
         _currentGuest.Exit(_moveDuration);
     }
+}
+
+[Serializable]
+public class Expression
+{
+    public Sprite normalExpression;
+    public Sprite happyExpression;
+    public Sprite angryExpression;
 }

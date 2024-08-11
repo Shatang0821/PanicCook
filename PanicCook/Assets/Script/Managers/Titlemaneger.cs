@@ -15,6 +15,8 @@ public class Titlemaneger : MonoBehaviour
     [SerializeField] GameObject TutorialPanel, fieldobject;
     
     [SerializeField] AudioData Bell;
+
+    [SerializeField] AudioData _bgm;
     // [SerializeField] AudioSource audiosource;
     // [SerializeField] AudioClip Bell; // ベルの効果音
     // Start is called before the first frame update
@@ -31,6 +33,8 @@ public class Titlemaneger : MonoBehaviour
         inputfield.transform.position = new Vector3(0, -5, 0);
         TutorialPanel.transform.position = new Vector3(25, 0, 0);
         alart.text = "店名を入力しよう!!";
+        
+        AudioManager.Instance.ChangeBGM(_bgm);
     }
 
     // Update is called once per frame
@@ -75,7 +79,7 @@ public class Titlemaneger : MonoBehaviour
             alart.enabled = false;
             fieldobject.SetActive(false);
             keypush2.text = "SPACEキーで営業開始!!";
-            tutorial.text = "AとDキーで移動し\nSpaceキーで確定!!\n目指せ"+Restaurantname+"の評価星5!!";
+            tutorial.text = "AとDキーで移動し\nSpaceとEnterキーで確定!!\n目指せ"+Restaurantname+"の評価星5!!";
         }
     }
 

@@ -15,6 +15,7 @@ public class Guest
 
     public bool IsOrdered = false;
     
+    private Expression _expression;    //表情
     /// <summary>
     /// 初期化処理
     /// </summary>
@@ -66,6 +67,7 @@ public class Guest
 
     public void Exit(float duration)
     {
+        
         _guestTransform.DOAnchorPosX(_guestTransform.anchoredPosition.x - 1100, duration).SetEase(Ease.Linear).onComplete = () =>
         {
             _guest.SetActive(false);

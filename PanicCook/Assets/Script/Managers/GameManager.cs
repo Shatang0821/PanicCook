@@ -1,8 +1,15 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using FrameWork.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+public enum GameAction
+{
+    Pause,
+    UnPause,
+}
 
 public enum GameState
 {
@@ -15,6 +22,13 @@ public enum GameState
 
 public class GameManager : UnitySingleton<GameManager>
 {
+    [SerializeField]
+    private AudioData _bgm;
+    [SerializeField]
+    private AudioData CorrectSE;
+    [SerializeField]
+    private AudioData IncorrectSE;
+    
     //プレイヤインスタンス
     [SerializeField]
     private Player _player;
@@ -40,6 +54,7 @@ public class GameManager : UnitySingleton<GameManager>
 
     private IEnumerator Start()
     {
+        AudioManager.Instance.ChangeBGM(_bgm);
         CurrentGameState = GameState.InitState;
         yield return new WaitForSeconds(1.5f);
     }
@@ -97,8 +112,13 @@ public class GameManager : UnitySingleton<GameManager>
     {
         _player.Reset();
         Debug.Log("ゲーム終了");
-        DOTween.KillAll();  // すべてのアニメーションを停止する場合
+        DOTween.KillAll();  // すべてのアニメーションを停止する
         SceneManager.LoadScene("Scoring");
+    }
+
+    private void OnDestroy()
+    {
+        DOTween.KillAll();  // すべてのアニメーションを停止する
     }
 
     private void ScoreState()
@@ -106,12 +126,14 @@ public class GameManager : UnitySingleton<GameManager>
         if (GuestManager.Instance.GetGuestOrderIndex() == _player.SubmitIndex)
         {
             Debug.Log("正解");
+            AudioManager.Instance.PlaySFX(CorrectSE);
             GuestManager.Instance.Exit();
             ScoreManager.Instance.AddScore(100);
             _correctStreakCount = Mathf.Clamp(_correctStreakCount + 1 , 0, 6);
         }
         else
         {
+            AudioManager.Instance.PlaySFX(IncorrectSE);
             GuestManager.Instance.Exit();
             _correctStreakCount = Mathf.Clamp(_correctStreakCount - 2 , 0, 6);
             ScoreManager.Instance.DecreaseScore(100);

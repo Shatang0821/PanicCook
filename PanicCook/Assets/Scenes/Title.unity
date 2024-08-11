@@ -529,6 +529,9 @@ MonoBehaviour:
   Bell:
     audioClip: {fileID: 8300000, guid: b2ce6a1e384e4c845900bbe5b44e5024, type: 3}
     volueme: 1
+  _bgm:
+    audioClip: {fileID: 8300000, guid: 101052fe0f6e00a40bd91e2822586e35, type: 3}
+    volueme: 0.5
 --- !u!114 &835710682
 MonoBehaviour:
   m_ObjectHideFlags: 0

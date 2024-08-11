@@ -4,7 +4,13 @@ using FrameWork.EventCenter;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInput: InputActions.IGamePlayActions
+public enum InputActionEnum
+{
+    EnableGamePlayInput,
+    EnablePauseMenuInput
+}
+
+public class PlayerInput: InputActions.IGamePlayActions,InputActions.IPauseActions
 {
     #region 変数定義
 
@@ -27,11 +33,44 @@ public class PlayerInput: InputActions.IGamePlayActions
     {
         _inputActions.Enable();
         _inputActions.GamePlay.SetCallbacks(this);
+        _inputActions.Pause.SetCallbacks(this);
     }
     
     public void OnDisable()
     {
         _inputActions.Disable();
+    }
+    
+    /// <summary>
+    /// ゲーム内でキャラクターを操作する時に入力を有効化するメソッド。
+    /// </summary>
+    public void EnableGameplayInput() => SwitchActionMap(_inputActions.GamePlay, false);
+
+    /// <summary>
+    /// 一時停止画面内の入力を有効化するメソッド
+    /// </summary>
+    public void EnablePauseMenuiInput() => SwitchActionMap(_inputActions.Pause, true);
+    
+    /// <summary>
+    /// 有効actionmapを変わり
+    /// </summary>
+    /// <param name="actionMap">変えたいactionMap</param>
+    /// <param name="isUIInput">UIの選択か</param>
+    void SwitchActionMap(InputActionMap actionMap, bool isUIInput)
+    {
+        _inputActions.Disable();
+        actionMap.Enable();
+
+        if(isUIInput)
+        {
+            Cursor.visible = true;                     // マウスカーソルを可視にします。
+            Cursor.lockState = CursorLockMode.None;    // マウスカーソルをロックしない。
+        }
+        else
+        {
+            Cursor.visible = false;                     // マウスカーソルを不可視にします。
+            Cursor.lockState = CursorLockMode.Locked;   // マウスカーソルをロックする。
+        }
     }
 
     public void OnAxis(InputAction.CallbackContext context)
@@ -48,6 +87,26 @@ public class PlayerInput: InputActions.IGamePlayActions
         if (context.performed)
         {
             EventCenter.TriggerEvent(PlayerAction.Submit);
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            Debug.Log("Pause");
+            EnablePauseMenuiInput();
+            EventCenter.TriggerEvent(GameAction.Pause);
+        }
+    }
+
+    public void OnUnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("UnPause");
+            EnableGameplayInput();
+            EventCenter.TriggerEvent(GameAction.UnPause);
         }
     }
 }

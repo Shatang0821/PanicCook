@@ -66,12 +66,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(transform.name + "座標は" + _rectTransform.anchoredPosition + "です");
+//        Debug.Log(transform.name + "座標は" + _rectTransform.anchoredPosition + "です");
         foreach (var VARIABLE in _foodTransforms)
         {
-            Debug.Log(VARIABLE.name + "座標は" + VARIABLE.anchoredPosition);
+//            Debug.Log(VARIABLE.name + "座標は" + VARIABLE.anchoredPosition);
         }
         SetPosToCenter();
+        
+        input.EnableGameplayInput();
     }
 
 

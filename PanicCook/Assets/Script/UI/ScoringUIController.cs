@@ -40,10 +40,10 @@ public class ScoringUIController : MonoBehaviour
             ShowScoringScreen();
         }
 
-        ButtonPressedBehavior.buttonFunctionTable.Add(buttonMainMenu.gameObject.name, OnButtonMainMenuClicked);
-        ButtonPressedBehavior.buttonFunctionTable.Add(buttonSubmit.gameObject.name, OnButtonSubmitClicked);
-        ButtonPressedBehavior.buttonFunctionTable.Add(buttonCancel.gameObject.name, HideNewHighScoreScreen);
-        ButtonPressedBehavior.buttonFunctionTable.Add(buttonRetry.gameObject.name, Retry);
+        ButtonPressedBehavior.AddButtonFunction(buttonMainMenu.gameObject.name, OnButtonMainMenuClicked);
+        ButtonPressedBehavior.AddButtonFunction(buttonSubmit.gameObject.name, OnButtonSubmitClicked);
+        ButtonPressedBehavior.AddButtonFunction(buttonCancel.gameObject.name, HideNewHighScoreScreen);
+        ButtonPressedBehavior.AddButtonFunction(buttonRetry.gameObject.name, Retry);
         
     }
 

@@ -30,7 +30,7 @@ public class Clock_Timer : MonoBehaviour
         float timer = seconds / TimerLimit;
 
         //確認用
-        Debug.Log(timer);
+//        Debug.Log(timer);
 
         //float型のtimerを返す
         return timer;
