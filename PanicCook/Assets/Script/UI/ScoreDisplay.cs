@@ -19,13 +19,13 @@ public class ScoreDisplay : MonoBehaviour
     
     public static void UpdateText(int score)
     {
-        scoreText.text = score.ToString();
-    }
-    
-    public static void UpdateStarText(int star)
-    {
-        //
+        if(scoreText)
+            scoreText.text = score.ToString();
     }
 
-    public static void ScaleText(Vector3 targetScale) => scoreText.rectTransform.localScale = targetScale;
+    public static void ScaleText(Vector3 targetScale)
+    {
+        if(scoreText)
+            scoreText.rectTransform.localScale = targetScale;
+    }
 }

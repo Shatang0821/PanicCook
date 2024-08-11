@@ -17,7 +17,7 @@ public enum StarNowHave
 public class ScoreManager : PersistentUnitySingleton<ScoreManager>
 {
     #region SCORE DISPLAY
-    public int Score => score;
+    public int Score => currentScore;
     public int Star => star;
 
     private int score;
@@ -98,6 +98,10 @@ public class ScoreManager : PersistentUnitySingleton<ScoreManager>
         if (newStar != star)
         {
             star = newStar;
+            
+            StarDisplay.Instance.UpdateStar(star);
+            GuestManager.Instance.DecreaseTime(star);
+            
             Debug.Log($"スターの数が更新されました！現在のスター数: {star}");
         }
     }
