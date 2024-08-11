@@ -7,19 +7,23 @@ using UnityEngine.SceneManagement;
 
 public class Titlemaneger : MonoBehaviour
 {
-    [SerializeField] Text title, keypush, tutorial, keypush2, alart, nametext;
+    [SerializeField] Text title, title2, keypush, tutorial, keypush2, alart, nametext;
     public InputField inputfield;
     public string Restaurantname;
     public float step; // タイトルの進行がどれくらいか
     public bool wait; // 進行中にキーを押しても動かないようにするため
     [SerializeField] GameObject TutorialPanel, fieldobject;
+    [SerializeField] AudioSource audiosource;
+    [SerializeField] AudioClip Bell; // ベルの効果音
     // Start is called before the first frame update
     void Start()
     {
         inputfield = inputfield.GetComponent<InputField>();
+        audiosource = audiosource.GetComponent<AudioSource>();
         step = 1;
         wait = false;
         title.enabled = true;
+        title2.enabled = true;
         keypush.enabled = true;
         alart.enabled = false;
         fieldobject.SetActive(false);
@@ -39,12 +43,13 @@ public class Titlemaneger : MonoBehaviour
         else if (step == 2)
         {
             title.enabled = false;
+            title2.enabled = false;
             keypush.enabled = false;
             tutorial.text = "お客様の注文に沿った料理を提供して\n店のランクを上げよう!!";
             keypush.text = "SPACEキーで次へ";
             if (TutorialPanel.transform.position.x >= 0)
             {
-                TutorialPanel.transform.position -= new Vector3(0.1f, 0, 0);
+                TutorialPanel.transform.position -= new Vector3(0.1f, 0, -0.1f);
             }
         }
         else if (step == 3)
@@ -67,6 +72,7 @@ public class Titlemaneger : MonoBehaviour
         else if (step == 6)
         {
             alart.enabled = false;
+            fieldobject.SetActive(false);
             keypush2.text = "SPACEキーで営業開始!!";
             tutorial.text = "AとDキーで移動し\nSpaceキーで確定!!\n目指せ"+Restaurantname+"の評価星5!!";
         }
@@ -74,9 +80,15 @@ public class Titlemaneger : MonoBehaviour
 
     public void OnStart(InputAction.CallbackContext context)
     {
-        if (wait == false&&step!=5)
+        if (wait == false&&step!=5&&step!=1)
         {
             wait = true;
+            StartCoroutine(nextstep());
+        }
+        if (wait == false && step==1)
+        {
+            wait = true;
+            audiosource.PlayOneShot(Bell);
             StartCoroutine(nextstep());
         }
         if (wait == false && step == 5)
