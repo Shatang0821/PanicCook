@@ -15,11 +15,15 @@ public enum GameState
 
 public class GameManager : UnitySingleton<GameManager>
 {
+    //プレイヤインスタンス
     [SerializeField]
     private Player _player;
-    
+    //ゲームの状態
     private GameState _currentGameState;
 
+    //連続正解数
+    private int _correctStreakCount = 0;
+    
     public GameState CurrentGameState
     {
         get => _currentGameState;
@@ -28,6 +32,7 @@ public class GameManager : UnitySingleton<GameManager>
             if (_currentGameState != value)
             {
                 _currentGameState = value;
+                //状態変更したときに呼び出す
                 OnEnterState(_currentGameState);
             }
         }
@@ -67,23 +72,23 @@ public class GameManager : UnitySingleton<GameManager>
         {
             case GameState.InitState:
                 // InitStateの初期化処理
-                Debug.Log("Entering InitState");
+                //Debug.Log("Entering InitState");
                 break;
             case GameState.WaitGuest:
                 // WaitGuestの初期化処理
-                Debug.Log("Entering WaitGuest");
+                //Debug.Log("Entering WaitGuest");
                 break;
             case GameState.PlayerTurn:
                 // PlayerTurnの初期化処理
-                Debug.Log("Entering PlayerTurn");
+                //Debug.Log("Entering PlayerTurn");
                 break;
             case GameState.ScoreState:
                 // ScoreStateの初期化処理
-                Debug.Log("Entering ScoreState");
+                //Debug.Log("Entering ScoreState");
                 break;
             case GameState.End:
                 // Endの初期化処理
-                Debug.Log("Entering End");
+                //Debug.Log("Entering End");
                 break;
         }
     }
@@ -103,11 +108,16 @@ public class GameManager : UnitySingleton<GameManager>
             Debug.Log("正解");
             GuestManager.Instance.Exit();
             ScoreManager.Instance.AddScore(100);
+            _correctStreakCount = Mathf.Clamp(_correctStreakCount + 1 , 0, 6);
         }
         else
         {
             GuestManager.Instance.Exit();
+            _correctStreakCount = Mathf.Clamp(_correctStreakCount - 2 , 0, 6);
+            ScoreManager.Instance.DecreaseScore(100);
         }
+
+        GuestManager.Instance.AdjustMoveTime(_correctStreakCount);
 
         CurrentGameState = GameState.InitState;
     }

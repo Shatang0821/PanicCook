@@ -1269,6 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f696ef4018ed144ea53e4e100b32171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  star: 0
 --- !u!4 &1531741857
 Transform:
   m_ObjectHideFlags: 0
@@ -1318,9 +1319,9 @@ MonoBehaviour:
   _guestSprites:
   - {fileID: 21300000, guid: 7c763ff7c8430aa4db2840421de4f5e7, type: 3}
   - {fileID: 21300000, guid: 3a8204d34a82f974ab71d790af0015a7, type: 3}
-  _waitTime: 0.8
+  _waitTime: 3
   _guestIndex: 0
-  _moveDuration: 0.3
+  _moveDuration: 0.8
 --- !u!4 &1659822782
 Transform:
   m_ObjectHideFlags: 0
