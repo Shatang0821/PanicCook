@@ -13,13 +13,14 @@ public class Titlemaneger : MonoBehaviour
     public float step; // タイトルの進行がどれくらいか
     public bool wait; // 進行中にキーを押しても動かないようにするため
     [SerializeField] GameObject TutorialPanel, fieldobject;
-    [SerializeField] AudioSource audiosource;
-    [SerializeField] AudioClip Bell; // ベルの効果音
+    
+    [SerializeField] AudioData Bell;
+    // [SerializeField] AudioSource audiosource;
+    // [SerializeField] AudioClip Bell; // ベルの効果音
     // Start is called before the first frame update
     void Start()
     {
         inputfield = inputfield.GetComponent<InputField>();
-        audiosource = audiosource.GetComponent<AudioSource>();
         step = 1;
         wait = false;
         title.enabled = true;
@@ -88,7 +89,9 @@ public class Titlemaneger : MonoBehaviour
         if (wait == false && step==1)
         {
             wait = true;
-            audiosource.PlayOneShot(Bell);
+            //効果音
+            AudioManager.Instance.PlaySFX(Bell);
+            //audiosource.PlayOneShot(Bell);
             StartCoroutine(nextstep());
         }
         if (wait == false && step == 5)
