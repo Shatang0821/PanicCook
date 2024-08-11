@@ -23,7 +23,7 @@ public class ScoringUIController : MonoBehaviour
     [SerializeField] Button buttonCancel;
     [SerializeField] Button buttonSubmit;
 
-    [SerializeField] InputField playerNameInputField;
+    [SerializeField] Text playerName;
 
     private void Start()
     {
@@ -53,6 +53,7 @@ public class ScoringUIController : MonoBehaviour
     void ShowNewHighScoreScreen()
     {
         newHighScoreScreenCanvas.enabled = true;
+        playerName.text = ScoreManager.Instance.GetRestaurantName();
     }
 
     /// <summary>
@@ -120,10 +121,7 @@ public class ScoringUIController : MonoBehaviour
     /// </summary>
     void OnButtonSubmitClicked()
     {
-        if(!string.IsNullOrEmpty(playerNameInputField.text))
-        {
-            ScoreManager.Instance.SetPlayerName(playerNameInputField.text);
-        }
+        ScoreManager.Instance.SetPlayerName(playerName.text);
         HideNewHighScoreScreen();
     }
 

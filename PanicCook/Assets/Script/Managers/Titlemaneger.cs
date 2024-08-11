@@ -109,11 +109,12 @@ public class Titlemaneger : MonoBehaviour
     {
         if (step == 6)
         {
-            SceneManager.LoadScene("Sample"); // シーンの名前が分かったら書き換えます
+            SceneManager.LoadScene("Sato_"); // シーンの名前が分かったら書き換えます
         }
         if (step == 5)
         {
             Restaurantname = inputfield.text;
+            ScoreManager.Instance.SetRestaurantName(Restaurantname);
         }
             step++;
             yield return new WaitForSeconds(1.0f);

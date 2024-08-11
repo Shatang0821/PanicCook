@@ -23,6 +23,9 @@ public class ScoreManager : PersistentUnitySingleton<ScoreManager>
     private int score;
     
     [SerializeField]
+    private string _restaurantName = "NO NAME";
+    
+    [SerializeField]
     private int star = 0;
     
     [SerializeField]
@@ -123,6 +126,21 @@ public class ScoreManager : PersistentUnitySingleton<ScoreManager>
         }
 
         ScoreDisplay.ScaleText(Vector3.one);
+    }
+    
+    /// <summary>
+    /// レストランの名前の設定
+    /// </summary>
+    /// <param name="name"></param>
+    public void SetRestaurantName(string name)
+    {
+        Debug.Log("レストラン名を設定しました！");
+        _restaurantName = name;
+    }
+    
+    public string GetRestaurantName()
+    {
+        return _restaurantName;
     }
     #endregion
 

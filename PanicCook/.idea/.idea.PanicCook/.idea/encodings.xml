@@ -3,5 +3,6 @@
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
     <file url="file://$PROJECT_DIR$/Assets/Script/Managers/FoodManager.cs" charset="windows-31j" />
     <file url="file://$PROJECT_DIR$/Assets/Script/Managers/TimeManager.cs" charset="windows-31j" />
+    <file url="file://$PROJECT_DIR$/Assets/Script/Managers/Titlemaneger.cs" charset="windows-31j" />
   </component>
 </project>
