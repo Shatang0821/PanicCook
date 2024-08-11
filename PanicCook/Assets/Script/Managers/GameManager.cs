@@ -127,14 +127,14 @@ public class GameManager : UnitySingleton<GameManager>
         {
             Debug.Log("正解");
             AudioManager.Instance.PlaySFX(CorrectSE);
-            GuestManager.Instance.Exit();
+            GuestManager.Instance.Exit(true);
             ScoreManager.Instance.AddScore(100);
             _correctStreakCount = Mathf.Clamp(_correctStreakCount + 1 , 0, 6);
         }
         else
         {
             AudioManager.Instance.PlaySFX(IncorrectSE);
-            GuestManager.Instance.Exit();
+            GuestManager.Instance.Exit(false);
             _correctStreakCount = Mathf.Clamp(_correctStreakCount - 2 , 0, 6);
             ScoreManager.Instance.DecreaseScore(100);
         }

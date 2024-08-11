@@ -37,11 +37,11 @@ public class ScoreManager : PersistentUnitySingleton<ScoreManager>
     private Dictionary<StarNowHave, int> _starWithScore = new Dictionary<StarNowHave, int>()
     {
         { StarNowHave.Zero, 0 },    // 初期状態では0ポイント
-        { StarNowHave.One, 100 },   // 1つ目のスター獲得に必要なポイント数
-        { StarNowHave.Two, 500 },   // 2つ目のスター獲得に必要なポイント数
-        { StarNowHave.Three, 1000 }, // 3つ目のスター獲得に必要なポイント数
-        { StarNowHave.Four,  1500},  // 4つ目のスター獲得に必要なポイント数
-        { StarNowHave.Five, 3000 }   // 5つ目のスター獲得に必要なポイント数
+        { StarNowHave.One, 200 },   // 1つ目のスター獲得に必要なポイント数
+        { StarNowHave.Two, 600 },   // 2つ目のスター獲得に必要なポイント数
+        { StarNowHave.Three, 1500 }, // 3つ目のスター獲得に必要なポイント数
+        { StarNowHave.Four,  2500},  // 4つ目のスター獲得に必要なポイント数
+        { StarNowHave.Five, 3500 }   // 5つ目のスター獲得に必要なポイント数
     };
 
     public void ResetScore()

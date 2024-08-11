@@ -1731,7 +1731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Timetext: {fileID: 1248685774}
-  limit: 10
+  limit: 60
 --- !u!114 &1248685774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1942,6 +1942,8 @@ MonoBehaviour:
   TableTransform: {fileID: 1195837056}
   _moveSpeed: 3000
   IsSubmit: 0
+  submitBuffertime: 0.5
+  _hasSubmitBuffer: 0
   _maxStamina: 10
 --- !u!1 &1428474737
 GameObject:

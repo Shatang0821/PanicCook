@@ -36,9 +36,10 @@ public class Guest
         _guest.SetActive(false);
     }
 
-    public void Spawn(Sprite sprite,Vector3 position,float duration)
+    public void Spawn(Expression expression,Vector3 position,float duration)
     {
-        _guestImage.sprite = sprite;
+        _expression = expression;
+        _guestImage.sprite = _expression.normalExpression;
         _guestTransform.anchoredPosition = position;
         _guest.SetActive(true);
         
@@ -65,8 +66,16 @@ public class Guest
        
     }
 
-    public void Exit(float duration)
+    public void Exit(float duration,bool isCorrect)
     {
+        if (isCorrect)
+        {
+            _guestImage.sprite = _expression.happyExpression;
+        }
+        else
+        {
+            _guestImage.sprite = _expression.angryExpression;
+        }
         
         _guestTransform.DOAnchorPosX(_guestTransform.anchoredPosition.x - 1100, duration).SetEase(Ease.Linear).onComplete = () =>
         {

@@ -30,7 +30,12 @@ public class Player : MonoBehaviour
     
     private Coroutine _moveCoroutine;       //移動コルーチン
     private Coroutine _doMoveCoroutine;     //移動コルーチン
-    
+    private Coroutine _submitBufferCoroutine; //入力バッファコルーチン
+    [SerializeField]
+    private float submitBuffertime;         //入力バッファ時間
+    private WaitForSeconds _submitBufferWait; //入力バッファ待機時間
+    [SerializeField]
+    private bool _hasSubmitBuffer = false;           //入力バッファ中か
     [SerializeField] private int _maxStamina;                //最大スタミナ
     private int _currentStamina;                             //スタミナ
     private void Awake()
@@ -39,6 +44,9 @@ public class Player : MonoBehaviour
         input = new PlayerInput();
         
         Initialize();
+        
+        //入力バッファ待機時間の設定
+        _submitBufferWait = new WaitForSeconds(submitBuffertime);
     }
 
     /// <summary>
@@ -91,6 +99,22 @@ public class Player : MonoBehaviour
         EventCenter.RemoveListener(PlayerAction.Submit, OnSubmit);
     }
 
+    private void Update()
+    {
+        if(GameManager.Instance.CurrentGameState == GameState.PlayerTurn)
+        {
+            if (_hasSubmitBuffer)
+            {
+                if(_canSubmit)
+                {
+                    IsSubmit = true;
+                    SubmitIndex = _currentIndex;
+                    Debug.Log("SubmitIndex:" + SubmitIndex);
+                }
+            }
+        }
+    }
+
     void OnMove(Vector2 axis)
     {
         //Debug.Log(axis);
@@ -103,12 +127,28 @@ public class Player : MonoBehaviour
     
     private void OnSubmit()
     {
-        if(_canSubmit && GameManager.Instance.CurrentGameState == GameState.PlayerTurn)
+        if(GameManager.Instance.CurrentGameState != GameState.PlayerTurn)
+            return;
+        
+        if(_submitBufferCoroutine!=null)
+        {
+            StopCoroutine(_submitBufferCoroutine);
+        }
+        _submitBufferCoroutine = StartCoroutine(SubmitBufferCoroutine());
+        
+        if(_canSubmit)
         {
             IsSubmit = true;
             SubmitIndex = _currentIndex;
             Debug.Log("SubmitIndex:" + SubmitIndex);
         }
+    }
+    
+    private IEnumerator SubmitBufferCoroutine()
+    {
+        _hasSubmitBuffer = true;
+        yield return _submitBufferWait;
+        _hasSubmitBuffer = false;
     }
 
     private IEnumerator MoveCoroutine(Vector2 axis)
@@ -162,6 +202,7 @@ public class Player : MonoBehaviour
         _currentStamina = _maxStamina;
         IsSubmit = false;
         SubmitIndex = -1;
+        _hasSubmitBuffer = false;
     }
 
     /// <summary>

@@ -31,7 +31,7 @@ public class Titlemaneger : MonoBehaviour
         alart.enabled = false;
         fieldobject.SetActive(false);
         inputfield.transform.position = new Vector3(0, -5, 0);
-        TutorialPanel.transform.position = new Vector3(25, 0, 0);
+        TutorialPanel.transform.position = new Vector3(25, 0, 10);
         alart.text = "“X–¼‚ð“ü—Í‚µ‚æ‚¤!!";
         
         AudioManager.Instance.ChangeBGM(_bgm);
@@ -54,7 +54,7 @@ public class Titlemaneger : MonoBehaviour
             keypush.text = "SPACEƒL[‚ÅŽŸ‚Ö";
             if (TutorialPanel.transform.position.x >= 0)
             {
-                TutorialPanel.transform.position -= new Vector3(0.1f, 0, -0.1f);
+                TutorialPanel.transform.position -= new Vector3(0.3f, 0, 0);
             }
         }
         else if (step == 3)

@@ -77,6 +77,8 @@ public class GuestManager : UnitySingleton<GuestManager>
         {
             VARIABLE.Initialize(Instantiate(_guestPrefab,Vector2.zero,Quaternion.identity,_guestParentTransform));
         }
+        
+        Debug.Log( _guestExpressions.Count);
     }
 
     /// <summary>
@@ -132,7 +134,7 @@ public class GuestManager : UnitySingleton<GuestManager>
     public IEnumerator SpawnGuestCoroutine()
     {
         _currentGuest = _guests[_guestIndex];
-        _currentGuest.Spawn(_guestSprites[Random.Range(0, _guestSprites.Length)], new Vector3(1100, 0, 0), _moveDuration);
+        _currentGuest.Spawn(_guestExpressions[Random.Range(0, _guestExpressions.Count)], new Vector3(1100, 0, 0), _moveDuration);
         _guestIndex = (_guestIndex + 1) % _guests.Count;
         
         yield return new WaitUntil(GuestIsOrdered);
@@ -165,16 +167,16 @@ public class GuestManager : UnitySingleton<GuestManager>
     private IEnumerator WaitFoodCoroutine()
     {
         yield return new WaitForSeconds(_waitTime);
-        Exit();
+        Exit(false);
         //時間オーバー
         IsTimeOver = true;
     }
 
-    public void Exit()
+    public void Exit(bool isCorrect)
     {
         if(_waitCoroutine != null)
             StopCoroutine(_waitCoroutine);
-        _currentGuest.Exit(_moveDuration);
+        _currentGuest.Exit(_moveDuration,isCorrect);
     }
 }
 
