@@ -11,7 +11,7 @@ public class TimeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Timetext.text = "Žc‚è" + limit.ToString("f0") + "•b";
+        Timetext.text = limit.ToString("f0");
 
         if (GameManager.Instance.CurrentGameState != GameState.End)
         {
